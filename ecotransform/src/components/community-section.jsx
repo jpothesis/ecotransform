@@ -6,11 +6,14 @@ import { Play, Heart, MessageCircle, Eye, Clock } from "lucide-react";
 
 const communityPosts = [
   {
+    
+        
     id: 1,
     type: "tutorial",
     title: "Turn Old T-Shirts into Rope",
     author: "Sustainable Sarah",
-    thumbnail: "ecotransform/public/images/image1.jpg",
+    thumbnail: "/images/image1.jpg",
+    
     duration: "5:32",
     views: "12.5K",
     likes: 892,
@@ -22,7 +25,7 @@ const communityPosts = [
     type: "showcase",
     title: "My Plastic Bottle Garden",
     author: "Green Guru",
-    thumbnail: "/beautiful-garden-made-from-plastic-bottles-vertica.jpg",
+    thumbnail: "/images/image2.webp",
     duration: "3:18",
     views: "8.2K",
     likes: 654,
@@ -34,7 +37,7 @@ const communityPosts = [
     type: "hack",
     title: "Jugaad: Cardboard Phone Stand",
     author: "Desi Innovator",
-    thumbnail: "/creative-cardboard-phone-stand-diy-jugaad.jpg",
+    thumbnail: "/images/image3.jpg",
     duration: "2:45",
     views: "15.8K",
     likes: 1203,
@@ -46,7 +49,7 @@ const communityPosts = [
     type: "story",
     title: "From Waste to ₹50K/Month",
     author: "Success Stories",
-    thumbnail: "/entrepreneur-success-story-waste-business.jpg",
+    thumbnail: "/images/image4.jpg",
     duration: "8:15",
     views: "25.3K",
     likes: 1876,
