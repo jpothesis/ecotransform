@@ -10,15 +10,14 @@ import MarketPlaceSection from "./components/marketplace-section";
 import TokensPage from "./components/TokensPage";
 import SellWaste from "./components/SellWastePage";
 import Artisans from "./components/ArtisansPage";
-
-
-
+import CommunityPage from "./components/CommunityPage";   // ✅ ADD THIS IMPORT
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
+        {/* Home Route */}
         <Route
           path="/"
           element={
@@ -32,11 +31,15 @@ function App() {
             </>
           }
         />
+
+        {/* Other Routes */}
         <Route path="/tokens" element={<TokensPage />} />
         <Route path="/sell-waste" element={<SellWaste />} />
         <Route path="/artisans" element={<Artisans />} />
         <Route path="/marketplace" element={<MarketPlaceSection />} />
 
+        {/* ✅ Community Page Route */}
+        <Route path="/community" element={<CommunityPage />} />
       </Routes>
     </>
   );
