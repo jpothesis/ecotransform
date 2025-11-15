@@ -57,7 +57,7 @@ export default function HeroSection() {
                   </Button>
                 </Link>
 
-                <Link to="/wallet">
+                <Link to="/marketplace">
                   <Button
                     variant="outline"
                     size="lg"
@@ -86,7 +86,8 @@ export default function HeroSection() {
 
                 {/* NFT Certificates */}
                 <Link
-                  to="/Tokens"
+                  to="/nft-certificate"
+                  
                   className="flex flex-col items-center p-4 bg-white/40 backdrop-blur-sm border border-amber-200/50 rounded-2xl shadow-lg hover:scale-105 transform transition-transform duration-300"
                 >
                   <div className="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">
