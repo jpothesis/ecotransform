@@ -52,10 +52,7 @@ export default function Navbar() {
               <MessageCircle className="h-4 w-4" />
               <span>Community</span>
             </Link>
-            <Link to="/impact" className={navLinkClasses}>
-              <BarChart3 className="h-4 w-4" />
-              <span>Impact</span>
-            </Link>
+
             <Link to="/nft-certificate" className={navLinkClasses}>
               <BadgeCheck className="h-4 w-4" />
               <span>NFT Certificate</span>
@@ -114,10 +111,6 @@ export default function Navbar() {
                 <span>Community</span>
               </Link>
 
-              <Link to="/impact" className={mobileNavLinkClasses} onClick={() => setIsOpen(false)}>
-                <BarChart3 className="h-4 w-4" />
-                <span>Impact</span>
-              </Link>
 
               <Link to="/nft-certificate" className={mobileNavLinkClasses} onClick={() => setIsOpen(false)}>
                 <BadgeCheck className="h-4 w-4" />
