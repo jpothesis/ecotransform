@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { Upload, Camera, DollarSign, Calendar } from "lucide-react";
+import { Upload, Camera, DollarSign, Calendar, Sparkle, SparkleIcon, SparklesIcon } from "lucide-react";
 
 export default function SellWastePage() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -143,7 +143,8 @@ export default function SellWastePage() {
 
             {/* Estimated Value */}
             <div className="flex items-center justify-between bg-amber-100/50 p-4 rounded-xl shadow-sm">
-              <DollarSign className="h-6 w-6 text-amber-600" />
+              <div className="font-bold text-amber-800 text-lg">AI Waste Evaluator</div>
+              <SparklesIcon className="h-6 w-6 text-amber-600" />
               <span className="font-bold text-amber-800 text-lg">Estimated Value: {estimatedValue}</span>
             </div>
 
