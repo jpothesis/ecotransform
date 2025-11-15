@@ -2,6 +2,8 @@ import React from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { Link } from "react-router-dom";
+
 import { Play, Heart, MessageCircle, Eye, Clock } from "lucide-react";
 
 const communityPosts = [
@@ -189,18 +191,19 @@ export default function CommunitySection() {
         </div>
 
 {/* Join Button */}
-<div className="text-center space-y-4">
+<div  className="text-center space-y-4">
+
+</div>
+<Link to="/Community">
   <Button
     size="lg"
-    className="inline-flex items-center justify-center gap-2 rounded-full py-3 px-8 bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md transition-all duration-300 transform hover:scale-105 hover:bg-orange-600 hover:from-orange-600 hover:to-orange-600 hover:text-white"
-  >
-    <MessageCircle className="h-5 w-5" />
-    Join Community
-  </Button>
-  <p className="text-sm text-amber-700/70">
-    Share your own tutorials and connect with 10,000+ eco-enthusiasts
-  </p>
-</div>
+    className="inline-flex items-center justify-center gap-2 rounded-full py-3 px-8 bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md transition-all duration-300 transform hover:scale-105 hover:bg-orange-600 hover:from-orange-600 hover:to-orange-600 hover:text-white">
+      <MessageCircle className="h-5 w-5" />
+      Join Community
+
+    </Button>
+</Link>
+
 
       </div>
     </section>
