@@ -9,14 +9,16 @@ import ImpactSection from "./components/impact-section";
 import Footer from "./components/footer";
 import MarketPlaceSection from "./components/marketplace-section";
 
-import TokensPage from "./components/TokensPage";
 import SellWaste from "./components/SellWastePage";
 import Artisans from "./components/ArtisansPage";
 import CommunityPage from "./components/CommunityPage";
 
-// ✅ Newly added pages
+// Newly added pages
 import ImpactPage from "./components/ImpactPage";
 import NftCertificates from "./components/NftCertificates";
+
+// ✅ Import ProfilePage
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   return (
@@ -39,15 +41,17 @@ function App() {
         />
 
         {/* Existing Routes */}
-        <Route path="/tokens" element={<TokensPage />} />
         <Route path="/sell-waste" element={<SellWaste />} />
         <Route path="/artisans" element={<Artisans />} />
         <Route path="/marketplace" element={<MarketPlaceSection />} />
         <Route path="/community" element={<CommunityPage />} />
 
-        {/* ✅ Newly Added */}
+        {/* Newly Added */}
         <Route path="/impact" element={<ImpactPage />} />
-        <Route path="/nft-certificate" element={<NftCertificates />} /> {/* Path matches Navbar link */}
+        <Route path="/nft-certificate" element={<NftCertificates />} />
+
+        {/* ✅ Profile Page Route */}
+        <Route path="/profile-page" element={<ProfilePage />} />
 
       </Routes>
     </>
