@@ -53,7 +53,7 @@ export default function HeroSection() {
                   >
                     <Upload className="mr-2 h-5 w-5" />
                     Start Selling Waste
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    
                   </Button>
                 </Link>
 
@@ -73,20 +73,20 @@ export default function HeroSection() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 animate-in slide-in-from-bottom duration-700 delay-900">
                 {/* Earn Waste Tokens */}
                 <Link
-                  to="/earn-waste"
+                  to="/sell-waste"
                   className="flex flex-col items-center p-4 bg-white/40 backdrop-blur-sm border border-amber-200/50 rounded-2xl shadow-lg hover:scale-105 transform transition-transform duration-300"
                 >
                   <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
                     💰
                   </div>
                   <div className="mt-2 text-amber-800 font-medium text-center">
-                    Earn WASTE Tokens
+                    AI Waste Evaluator
                   </div>
                 </Link>
 
                 {/* NFT Certificates */}
                 <Link
-                  to="/nft-certificates"
+                  to="/Tokens"
                   className="flex flex-col items-center p-4 bg-white/40 backdrop-blur-sm border border-amber-200/50 rounded-2xl shadow-lg hover:scale-105 transform transition-transform duration-300"
                 >
                   <div className="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">
@@ -99,7 +99,7 @@ export default function HeroSection() {
 
                 {/* Marketplace */}
                 <Link
-                  to="/wallet"
+                  to="/Marketplace"
                   className="flex flex-col items-center p-4 bg-white/40 backdrop-blur-sm border border-amber-200/50 rounded-2xl shadow-lg hover:scale-105 transform transition-transform duration-300"
                 >
                   <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent">
