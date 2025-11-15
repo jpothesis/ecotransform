@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 
 import Navbar from "./components/Navbar";
+import Cart from "./components/Cart";
 import HeroSection from "./components/hero-section";
 import FeatureSection from "./components/features-section";
 import CommunitySection from "./components/community-section";
@@ -45,6 +46,7 @@ function App() {
 
         {/* Authentication Routes */}
         <Route path="/get-started" element={<GetStarted />} />
+
         <Route path="/login" element={<SignIn />} />
 
         {/* Other Routes */}
@@ -56,6 +58,7 @@ function App() {
         {/* New routes */}
         <Route path="/nft-certificate" element={<NftCertificates />} />
         <Route path="/buy_waste" element={<BuyWaste />} />
+        <Route path="/cart" element={<Cart />} />
 
         <Route path="/profile-page" element={<ProfilePage />} />
       </Routes>
