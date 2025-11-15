@@ -1,9 +1,9 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import ScrollToTop from "./components/ScrollToTop";
 
-import Navbar from "./components/Navbar";
+import Navbar from "../components/Navbar";
 import Cart from "./components/Cart";
 import HeroSection from "./components/hero-section";
 import FeatureSection from "./components/features-section";
@@ -21,15 +21,24 @@ import ProfilePage from "./components/ProfilePage";
 import GetStarted from "./components/GetStarted";
 import SignIn from "./components/SignIn";
 
+// ------------------------------
+// ProtectedRoute Component
+// ------------------------------
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token"); // check if user is logged in
+  if (!token) {
+    return <Navigate to="/login" />; // redirect to login if not logged in
+  }
+  return children;
+};
+
 function App() {
   return (
     <>
       <ScrollToTop />
-
       <Navbar />
 
       <Routes>
-
         {/* Home Route */}
         <Route
           path="/"
@@ -46,7 +55,6 @@ function App() {
 
         {/* Authentication Routes */}
         <Route path="/get-started" element={<GetStarted />} />
-
         <Route path="/login" element={<SignIn />} />
 
         {/* Other Routes */}
@@ -60,7 +68,15 @@ function App() {
         <Route path="/buy_waste" element={<BuyWaste />} />
         <Route path="/cart" element={<Cart />} />
 
-        <Route path="/profile-page" element={<ProfilePage />} />
+        {/* Protected Profile Route */}
+        <Route
+          path="/profile-page"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
