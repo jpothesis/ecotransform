@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ShoppingCart, Scale, Info, Truck } from 'lucide-react';
 
-const BuyWastePage = () => {
+const BuyWaste = () => {
   const [selectedItems, setSelectedItems] = useState(new Set());
 
   const wasteProducts = [
@@ -244,4 +244,4 @@ const BuyWastePage = () => {
   );
 };
 
-export default BuyWastePage;
+export default BuyWaste;
