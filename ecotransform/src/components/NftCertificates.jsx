@@ -215,7 +215,7 @@ export default function NftCertificates() {
                         </div>
                         
                         <p className="text-sm text-amber-700 italic mb-6">
-                            This is a verified NFT certificate on the blockchain, serving as **immutable proof** of your sustainable contribution.
+                            This is a verified NFT certificate on the, serving as **immutable proof** of your sustainable contribution.
                         </p>
 
                         <div className="flex flex-col gap-3">
