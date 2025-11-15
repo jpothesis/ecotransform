@@ -9,21 +9,21 @@ const artisans = [
     name: "Priya Sharma",
     category: "Handmade Bags",
     description: "Expert in creating upcycled denim and jute bags with sustainable methods.",
-    image: "/artisans/priya-sharma.jpg",
+    image: "/images/priyasharma.jpg",
   },
   {
     id: 2,
     name: "Rohit Verma",
     category: "Eco-Home Decor",
     description: "Crafts unique home decor using recycled and natural materials.",
-    image: "/artisans/rohit-verma.jpg",
+    image: "/images/rohitverma.jpg",
   },
   {
     id: 3,
     name: "Ananya Gupta",
     category: "Organic Clothing",
     description: "Designs eco-friendly clothing using organic cotton and natural dyes.",
-    image: "/artisans/ananya-gupta.jpg",
+    image: "/images/ananyagupta.jpg",
   },
 ];
 
