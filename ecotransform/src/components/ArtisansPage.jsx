@@ -9,7 +9,7 @@ const artisans = [
     name: "Priya Sharma",
     category: "Handmade Bags",
     description: "Expert in creating upcycled denim and jute bags with sustainable methods.",
-    image: "/images/priyasharma.jpg",
+    image: "/images/denim.jpg",
   },
   {
     id: 2,
@@ -25,6 +25,32 @@ const artisans = [
     description: "Designs eco-friendly clothing using organic cotton and natural dyes.",
     image: "/images/ananyagupta.jpg",
   },
+  {
+    id: 4,
+    name: "Rohan Sharma",
+    category: "Coconut Shell Crafts",
+    description: "Creates elegant handmade décor items like candle holders, bowls, and ornaments using upcycled coconut shells.",
+    image: "/images/coconut.jpg",
+  },
+  {
+    id: 5,
+    name: "Sara Sinha",
+    category: "Eco-Friendly Beauty",
+    description: "Formulates natural soaps, scrubs, and skincare products using plant-based ingredients.",
+    image: "/images/soap.jpg",
+  },
+   {
+    id: 5,
+    name: "Tanmay Mehta",
+    category: "Handcrafted Pottery",
+    description: "Makes eco-friendly clay cups, planters, and home décor using traditional hand-molding techniques.",
+    image: "/images/pottery.jpg",
+  },
+
+
+  
+  
+ 
 ];
 
 export default function ArtisansPage() {
