@@ -1,169 +1,235 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import React, { useState, useMemo } from 'react';
 import { Button } from "./ui/button";
-import { Upload, Camera, DollarSign, Calendar, Sparkle, SparkleIcon, SparklesIcon } from "lucide-react";
+import { Upload, Camera, Calendar, SparklesIcon, MapPin } from "lucide-react";
 
 export default function SellWastePage() {
+  // --- Form State ---
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [material, setMaterial] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  const [delivery, setDelivery] = useState('');
+  const [pickupDate, setPickupDate] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [estimatedValue, setEstimatedValue] = useState("₹0");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [material, setMaterial] = useState("");
-  const [delivery, setDelivery] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState(null);
 
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files);
-    setSelectedFiles(files);
-    let totalValue = files.length * 100; // placeholder AI value
-    setEstimatedValue(`₹${totalValue}`);
+  // --- Helpers ---
+  const handleFileUpload = (event) => {
+    setSelectedFiles(Array.from(event.target.files));
   };
 
-  return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-screen">
-      {/* Background Blurs */}
-      <div className="absolute inset-0">
-        <div className="absolute top-10 left-20 w-64 h-64 bg-gradient-to-r from-amber-200/20 to-orange-200/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-orange-200/15 to-yellow-200/15 rounded-full blur-3xl animate-pulse delay-1000" />
-      </div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmissionMessage(null);
 
-      <div className="relative max-w-5xl mx-auto space-y-12">
-        {/* Heading */}
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-200/50 backdrop-blur-sm">
-            <span className="text-sm font-medium text-amber-800">Sell Your Waste</span>
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-balance leading-tight">
-            Turn Your Waste into{" "}
-            <span className="bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent">
-              Value
-            </span>
-          </h2>
-          <p className="text-xl text-amber-800/70 max-w-3xl mx-auto leading-relaxed">
-            Upload your recyclable waste, fill product details, and schedule convenient pickup.
+    // Mock API call simulation
+    setTimeout(() => {
+      console.log({ title, description, material, quantity, delivery, pickupDate, files: selectedFiles.length });
+      setSubmissionMessage({
+        type: 'success',
+        text: 'Successfully listed your waste! Check your profile for updates.',
+      });
+      setIsSubmitting(false);
+      // Reset form
+      setTitle('');
+      setDescription('');
+      setMaterial('');
+      setQuantity(0);
+      setDelivery('');
+      setPickupDate('');
+      setSelectedFiles([]);
+    }, 2000);
+  };
+
+  // --- Estimated Value in ₹ ---
+  const estimatedValue = useMemo(() => {
+    const qty = parseFloat(quantity) || 0;
+    let ratePerKg = 0;
+
+    switch (material) {
+      case 'recycled_plastic':
+        ratePerKg = 40;
+        break;
+      case 'metal':
+        ratePerKg = 80;
+        break;
+      case 'wood':
+        ratePerKg = 30;
+        break;
+      case 'textile':
+        ratePerKg = 20;
+        break;
+      case 'glass':
+        ratePerKg = 25;
+        break;
+      case 'e-waste':
+        ratePerKg = 100;
+        break;
+      default:
+        ratePerKg = 10;
+    }
+
+    const value = (qty * ratePerKg).toFixed(2);
+    return `₹ ${value}`;
+  }, [quantity, material]);
+
+  // --- Render ---
+  return (
+    <div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100">
+      <div className="max-w-4xl mx-auto px-6 py-10">
+
+        {/* Header */}
+        <div className="text-center mb-10">
+          <Upload className="w-16 h-16 mx-auto text-orange-600 mb-4" />
+          <h1 className="text-4xl font-extrabold text-amber-950 mb-3">
+            List Your Waste for Transformation ♻️
+          </h1>
+          <p className="text-lg text-amber-800 max-w-2xl mx-auto">
+            Turn your scrap into value. Fill in the details, upload photos, and schedule a pickup or drop-off.
           </p>
         </div>
 
-        {/* Product Form Card */}
-        <Card className="group relative bg-white/60 backdrop-blur-sm border border-amber-200/30 hover:bg-white/80 hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
-          <CardHeader>
-            <CardTitle className="text-amber-800">Product Details</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Product Title */}
+        {/* Submission Message */}
+        {submissionMessage && (
+          <div className={`p-4 rounded-lg text-center mb-6 ${submissionMessage.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            <p className="font-semibold">{submissionMessage.text}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-2xl border border-amber-200 space-y-6">
+
+          {/* Section 1: Basic Details */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-amber-900 border-b pb-2">What are you listing?</h2>
+
             <input
               type="text"
-              placeholder="Product Title"
+              placeholder="Title (e.g., Old car tires or Scrap metal sheets)"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-300 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:border-orange-500 focus:ring-1 focus:ring-orange-300 transition-all text-lg"
+              required
             />
 
-            {/* Description */}
             <textarea
-              placeholder="Description"
+              placeholder="Detailed Description (Condition, size, location, etc.)"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-300 transition-all"
-              rows={3}
+              rows={4}
+              className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:border-orange-500 focus:ring-1 focus:ring-orange-300 transition-all"
+              required
             />
+          </div>
 
-            {/* Category */}
-            <input
-              type="text"
-              placeholder="Category (e.g., Home Decor)"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-300 transition-all"
-            />
-
-            {/* Quantity */}
-            <input
-              type="number"
-              min={1}
-              placeholder="Quantity"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-300 transition-all"
-            />
-
-            {/* Material Dropdown */}
+          {/* Section 2: Material and Quantity */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <select
               value={material}
               onChange={(e) => setMaterial(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-300 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:border-orange-500 focus:ring-1 focus:ring-orange-300 transition-all appearance-none bg-white cursor-pointer"
+              required
             >
-              <option value="">Select Material</option>
-              <option value="bamboo">Bamboo</option>
-              <option value="recycled_plastic">Recycled Plastic</option>
-              <option value="jute">Jute</option>
-              <option value="cork">Cork</option>
-              <option value="organic_cotton">Organic Cotton</option>
+              <option value="" disabled>Select Material Type</option>
+              <option value="recycled_plastic">Plastic (#1-7)</option>
+              <option value="metal">Metal (Steel, Aluminum)</option>
+              <option value="wood">Wood/Timber Scrap</option>
+              <option value="textile">Textile Waste</option>
               <option value="glass">Glass</option>
+              <option value="e-waste">E-Waste/Electronics</option>
             </select>
 
-            {/* Delivery Options */}
-            <select
-              value={delivery}
-              onChange={(e) => setDelivery(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-300 transition-all"
-            >
-              <option value="">Select Delivery Option</option>
-              <option value="pickup">Pickup</option>
-              <option value="courier">Courier</option>
-              <option value="self_drop">Self Drop</option>
-            </select>
+            <div className="relative">
+              <input
+                type="number"
+                min={1}
+                placeholder="Quantity (in kg or units)"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:border-orange-500 focus:ring-1 focus:ring-orange-300 transition-all pr-16"
+                required
+              />
+              <span className="absolute right-0 top-0 mt-3 mr-4 text-sm font-semibold text-amber-700">kg</span>
+            </div>
+          </div>
 
-            {/* Upload Box */}
-            <div className="relative border-dashed border-2 border-amber-200 rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-amber-400 transition-colors">
-              <Camera className="h-10 w-10 text-amber-600 mb-3" />
-              <p className="text-amber-700/80 mb-3 text-center">
+          {/* AI Evaluation */}
+          <div className="flex items-center justify-between bg-amber-100 p-4 rounded-xl shadow-md border-l-4 border-orange-500">
+            <div className="flex items-center gap-3">
+              <SparklesIcon className="h-6 w-6 text-orange-600 animate-pulse" />
+              <div className="font-bold text-amber-800 text-lg">AI Waste Evaluator</div>
+            </div>
+            <span className="font-bold text-lg text-orange-700">Value: {estimatedValue}</span>
+          </div>
+
+          {/* Section 3: Photos and Delivery */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div className="relative border-dashed border-4 border-amber-300 rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-orange-500 transition-colors bg-amber-50 h-56">
+              <Camera className="h-10 w-10 text-orange-600 mb-3" />
+              <p className="text-amber-700/80 mb-3 text-center font-medium">
                 Drag & drop files here or click to upload
               </p>
               <input
                 type="file"
                 multiple
-                accept="image/*,video/*"
+                accept="image/*"
                 onChange={handleFileUpload}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
+              {selectedFiles.length > 0 && (
+                <p className="text-sm font-semibold text-green-600 mt-2">
+                  ✅ {selectedFiles.length} file(s) selected
+                </p>
+              )}
             </div>
 
-            {selectedFiles.length > 0 && (
-              <div className="space-y-2">
-                <h4 className="font-semibold text-amber-800">Files Selected ({selectedFiles.length})</h4>
-                <ul className="space-y-1 text-sm text-amber-700/80">
-                  {selectedFiles.map((file, idx) => (
-                    <li key={idx}>{file.name}</li>
-                  ))}
-                </ul>
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-amber-900 flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-orange-600"/> Delivery Options
+              </h3>
+              <select
+                value={delivery}
+                onChange={(e) => setDelivery(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:border-orange-500 focus:ring-1 focus:ring-orange-300 transition-all appearance-none bg-white cursor-pointer"
+                required
+              >
+                <option value="" disabled>Select Delivery Option</option>
+                <option value="pickup">Schedule Pickup (We Collect)</option>
+                <option value="self_drop">Self Drop (I drop off)</option>
+              </select>
+
+              {delivery === 'pickup' && (
+                <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm border border-amber-200/50 rounded-xl px-4 py-3 shadow-sm">
+                  <Calendar className="h-5 w-5 text-orange-600" />
+                  <input
+                    type="date"
+                    value={pickupDate}
+                    onChange={(e) => setPickupDate(e.target.value)}
+                    className="bg-transparent focus:outline-none text-amber-800 font-medium w-full"
+                    required
+                  />
+                </div>
+              )}
+
+              <div className="bg-amber-50 p-3 rounded-lg text-sm text-amber-700">
+                <p>Pickup requests typically incur a small fee which will be deducted from your earnings.</p>
               </div>
-            )}
-
-            {/* Estimated Value */}
-            <div className="flex items-center justify-between bg-amber-100/50 p-4 rounded-xl shadow-sm">
-              <div className="font-bold text-amber-800 text-lg">AI Waste Evaluator</div>
-              <SparklesIcon className="h-6 w-6 text-amber-600" />
-              <span className="font-bold text-amber-800 text-lg">Estimated Value: {estimatedValue}</span>
             </div>
+          </div>
 
-            {/* Schedule Pickup */}
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm border border-amber-200/50 rounded-full px-4 py-2 shadow-sm w-full sm:w-auto">
-                <Calendar className="h-5 w-5 text-primary" />
-                <input
-                  type="date"
-                  className="bg-transparent focus:outline-none text-amber-800 font-medium"
-                />
-              </div>
-              <Button className="rounded-full py-3 px-6 bg-gradient-to-r from-orange-600 to-amber-600 text-white hover:bg-orange-600 hover:text-white transition-all duration-300 w-full sm:w-auto">
-                Schedule Pickup
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          {/* Submit Button */}
+          <Button 
+            type="submit"
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-lg py-3 rounded-full shadow-lg hover:shadow-xl transition-all"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Listing Waste...' : 'List Waste Now'}
+          </Button>
+
+        </form>
       </div>
-    </section>
+    </div>
   );
 }

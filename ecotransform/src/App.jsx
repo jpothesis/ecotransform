@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/hero-section";
 import FeatureSection from "./components/features-section";
@@ -7,10 +8,17 @@ import CommunitySection from "./components/community-section";
 import ImpactSection from "./components/impact-section";
 import Footer from "./components/footer";
 import MarketPlaceSection from "./components/marketplace-section";
-import TokensPage from "./components/TokensPage";
+
 import SellWaste from "./components/SellWastePage";
 import Artisans from "./components/ArtisansPage";
-import CommunityPage from "./components/CommunityPage";   // ✅ ADD THIS IMPORT
+import CommunityPage from "./components/CommunityPage";
+
+// Newly added pages
+import ImpactPage from "./components/ImpactPage";
+import NftCertificates from "./components/NftCertificates";
+
+// ✅ Import ProfilePage
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   return (
@@ -32,14 +40,19 @@ function App() {
           }
         />
 
-        {/* Other Routes */}
-        <Route path="/tokens" element={<TokensPage />} />
+        {/* Existing Routes */}
         <Route path="/sell-waste" element={<SellWaste />} />
         <Route path="/artisans" element={<Artisans />} />
         <Route path="/marketplace" element={<MarketPlaceSection />} />
-
-        {/* ✅ Community Page Route */}
         <Route path="/community" element={<CommunityPage />} />
+
+        {/* Newly Added */}
+        <Route path="/impact" element={<ImpactPage />} />
+        <Route path="/nft-certificate" element={<NftCertificates />} />
+
+        {/* ✅ Profile Page Route */}
+        <Route path="/profile-page" element={<ProfilePage />} />
+
       </Routes>
     </>
   );
