@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Menu, X, Recycle, Users, ShoppingBag, MessageCircle, BarChart3, BadgeCheck, User } from "lucide-react";
+import { Menu, X, Recycle, Users, ShoppingBag, MessageCircle, BarChart3, BadgeCheck, User, ArrowBigDown, ArrowBigDownIcon, ArrowBigLeft } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,10 +53,17 @@ export default function Navbar() {
               <span>Community</span>
             </Link>
 
+            <Link to="/buy_waste" className={navLinkClasses}>
+              <ArrowBigDown className="h-4 w-4" />
+              <span>Buy Waste</span>
+            </Link> 
             <Link to="/nft-certificate" className={navLinkClasses}>
-              <BadgeCheck className="h-4 w-4" />
-              <span>NFT Certificate</span>
-            </Link>
+               <BadgeCheck className="h-4 w-4" />
+               <span>NFT Certificate</span>
+
+
+            </Link> 
+            
           </div>
 
           {/* Desktop CTA Buttons */}

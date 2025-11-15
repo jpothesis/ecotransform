@@ -12,9 +12,14 @@ import MarketPlaceSection from "./components/marketplace-section";
 import SellWaste from "./components/SellWastePage";
 import Artisans from "./components/ArtisansPage";
 import CommunityPage from "./components/CommunityPage";
+import BuyWaste from "./components/buy_waste";
+
+<Route path="/buy_waste" element={<BuyWaste />} />
+
+
 
 // Newly added pages
-import ImpactPage from "./components/ImpactPage";
+
 import NftCertificates from "./components/NftCertificates";
 
 // ✅ Import ProfilePage
@@ -47,8 +52,10 @@ function App() {
         <Route path="/community" element={<CommunityPage />} />
 
         {/* Newly Added */}
-        <Route path="/impact" element={<ImpactPage />} />
+        
         <Route path="/nft-certificate" element={<NftCertificates />} />
+        
+        <Route path="/buy_waste" element={<BuyWaste />} />    
 
         {/* ✅ Profile Page Route */}
         <Route path="/profile-page" element={<ProfilePage />} />
