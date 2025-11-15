@@ -14,6 +14,7 @@ export default function SellWastePage() {
   const [userPrice, setUserPrice] = useState(""); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState(null);
+  const [certificates, setCertificates] = useState([]); // ✅ store NFT certificates
 
   // Handle file selection
   const handleFileUpload = (e) => setSelectedFiles(Array.from(e.target.files));
@@ -51,13 +52,20 @@ export default function SellWastePage() {
       formData.append("price", userPrice || ratePerKg);
       formData.append("delivery", delivery);
       if (pickupDate) formData.append("pickupDate", pickupDate);
-      formData.append("createdBy", "user123"); // replace with actual logged-in user ID if available
+      formData.append("createdBy", "user123"); // replace with actual user ID
 
       selectedFiles.forEach(file => formData.append("images", file));
+      const API_URL = process.env.REACT_APP_API_URL;
 
-      await axios.post("http://localhost:5000/api/waste/create", formData, {
+      // Send to backend
+      const response = await axios.post(`${API_URL}/api/waste/create`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
-      });
+    });
+
+      const { waste, certificate } = response.data;
+
+      // Update certificates state to show in frontend
+      if (certificate) setCertificates(prev => [certificate, ...prev]);
 
       setSubmissionMessage({ type: "success", text: "Successfully listed your waste!" });
       setTitle(""); setDescription(""); setMaterial(""); setQuantity(0);
@@ -174,6 +182,23 @@ export default function SellWastePage() {
             {isSubmitting ? "Submitting Listing..." : "List Waste Now"}
           </Button>
         </form>
+
+        {/* NFT Certificates Display */}
+        {certificates.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-3xl font-bold text-amber-900 mb-6">Your NFT Certificates</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {certificates.map(cert => cert && (
+                <div key={cert._id} className="p-4 border rounded-xl bg-amber-50 shadow-sm">
+                  <h3 className="font-bold text-amber-900">{cert.title}</h3>
+                  <p className="text-amber-700">Material: {cert.material}</p>
+                  <p className="text-amber-700">Amount: {cert.amount} kg</p>
+                  <p className="text-amber-700 break-all">Tx: {cert.transactionHash}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const BuyWaste = () => {
   useEffect(() => {
     const fetchWaste = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/waste/all");
+        const res = await axios.get(`${API_URL}/api/certificates`);
         setWasteProducts(res.data.data || res.data); // depending on response structure
       } catch (err) {
         console.error("Error fetching waste:", err);
@@ -47,7 +47,7 @@ const BuyWaste = () => {
           {wasteProducts.map(product => (
             <div key={product._id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-64 overflow-hidden group">
-                <img src={`http://localhost:5000${product.images[0]}`} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                <img src={`${process.env.REACT_APP_API_URL}${product.images[0]}`} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
                 <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-bold text-orange-600">
                   {product.material}
                 </div>
