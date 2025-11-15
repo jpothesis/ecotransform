@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import ScrollToTop from "./components/ScrollToTop"; // ✅ ADDED
+import ScrollToTop from "./components/ScrollToTop";
 
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import HeroSection from "./components/hero-section";
 import FeatureSection from "./components/features-section";
 import CommunitySection from "./components/community-section";
@@ -13,18 +13,17 @@ import MarketPlaceSection from "./components/marketplace-section";
 import SellWaste from "./components/SellWastePage";
 import Artisans from "./components/ArtisansPage";
 import CommunityPage from "./components/CommunityPage";
+import BuyWaste from "./components/buy_waste";
 
 import NftCertificates from "./components/NftCertificates";
 import ProfilePage from "./components/ProfilePage";
-
 import GetStarted from "./components/GetStarted";
 import SignIn from "./components/SignIn";
 
 function App() {
   return (
     <>
-      {/* Scroll to Top on Route Change */}
-      <ScrollToTop />   {/* ✅ WORKS GLOBALLY */}
+      <ScrollToTop />
 
       <Navbar />
 
@@ -53,9 +52,12 @@ function App() {
         <Route path="/artisans" element={<Artisans />} />
         <Route path="/marketplace" element={<MarketPlaceSection />} />
         <Route path="/community" element={<CommunityPage />} />
-        <Route path="/nft-certificate" element={<NftCertificates />} />
-        <Route path="/profile-page" element={<ProfilePage />} />
 
+        {/* New routes */}
+        <Route path="/nft-certificate" element={<NftCertificates />} />
+        <Route path="/buy_waste" element={<BuyWaste />} />
+
+        <Route path="/profile-page" element={<ProfilePage />} />
       </Routes>
     </>
   );

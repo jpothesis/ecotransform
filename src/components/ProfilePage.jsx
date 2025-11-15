@@ -8,10 +8,15 @@ import {
   Zap,
   Users,
   Award,
+  ShoppingCart, // <--- New Icon
   Target,
   PieChart
 } from 'lucide-react'
-import { Button } from "./ui/button";
+import { Button } from "./ui/button"; // Assuming you use shadcn/ui Button
+
+// Note: To make this fully functional, you would typically use React Router
+// or Next.js routing to switch between the ProfilePage and CartPage.
+// For this example, I'll keep the button visually updated.
 
 export default function ProfilePage() {
 
@@ -24,6 +29,25 @@ export default function ProfilePage() {
     contributions: 42,
     totalWaste: 2340
   })
+  
+  // State to simulate navigation, replace with actual router logic
+  const [activePage, setActivePage] = useState('profile');
+
+  // If the user is on the Cart page, render CartPage component
+  if (activePage === 'cart') {
+    // You would import and render the CartPage component here
+    // return <CartPage onGoBack={() => setActivePage('profile')} />;
+    
+    // For now, let's keep the view simple until you integrate the router:
+    return <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="p-8 bg-white rounded-xl shadow-lg">
+            <h1 className="text-3xl font-bold text-amber-900 mb-4">Shopping Cart (Placeholder)</h1>
+            <p className="text-amber-700">Clicking the Cart button would navigate here.</p>
+            <Button className="mt-4" onClick={() => setActivePage('profile')}>Go Back to Profile</Button>
+        </div>
+    </div>
+  }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100">
@@ -54,9 +78,15 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex gap-3">
-              <Button variant="outline" className="border-orange-300 text-orange-700 hover:bg-orange-50">
-                Settings
+              {/* --- NEW CART BUTTON --- */}
+              <Button 
+                onClick={() => setActivePage('cart')} // Add your routing logic here
+                className="bg-orange-500 hover:bg-orange-600 text-white shadow-md transition-colors"
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Cart
               </Button>
+              {/* --- END NEW CART BUTTON --- */}
 
               <Button variant="outline" className="border-red-300 text-red-700 hover:bg-red-50">
                 Sign Out
@@ -64,7 +94,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Quick Stats */}
+          {/* Quick Stats (Rest of the Profile Header content is unchanged) */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg p-4 text-center">
               <p className="text-3xl font-bold text-orange-600">{userProfile.contributions}</p>
@@ -88,8 +118,12 @@ export default function ProfilePage() {
           </div>
         </div>
 
-
-
+        {/* OVERVIEW SECTION (unchanged) */}
+        {/* IMPACT SECTION (unchanged) */}
+        {/* NFT CERTIFICATES SECTION (unchanged) */}
+        
+        {/* ... Rest of the ProfilePage content remains the same ... */}
+        
         {/* -------------------------------------------
             OVERVIEW SECTION (always visible)
         -------------------------------------------- */}
@@ -121,7 +155,7 @@ export default function ProfilePage() {
                         contrib.status === 'Processed'
                           ? 'bg-green-100 text-green-700'
                           : 'bg-yellow-100 text-yellow-700'
-                      }`}>
+                        }`}>
                         {contrib.status}
                       </span>
                     </div>

@@ -28,11 +28,12 @@ const flipCardData = [
   {
     id: 102,
     title: "Metal Art from Industrial Scraps",
-    frontImage: RaviImage,
+    frontImage: "/images/metal2.jpg",
     backContent:
       "Ravi Kumar hosts monthly workshops demonstrating how to safely and artistically transform metal waste into powerful sculptures. Next workshop: Nov 25th.",
     actionText: "Join Workshop",
     color: "bg-amber-700",
+   
   },
 ];
 
@@ -60,7 +61,7 @@ const communityPosts = [
     role: "Artisan",
     content:
       "Metal sculpture workshop happening next weekend! All materials are 100% recycled industrial waste.",
-    image: RaviImage,
+    image: "/images/metal.jpg",
     likes: 289,
     comments: 45,
     timestamp: "4 hours ago",
