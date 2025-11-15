@@ -10,7 +10,7 @@ const communityPosts = [
     type: "tutorial",
     title: "Turn Old T-Shirts into Rope",
     author: "Sustainable Sarah",
-    thumbnail: "/tutorial-turning-old-t-shirts-into-rope-diy.jpg",
+    thumbnail: "ecotransform/public/images/image1.jpg",
     duration: "5:32",
     views: "12.5K",
     likes: 892,
