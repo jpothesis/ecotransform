@@ -13,10 +13,11 @@ export default function SignIn() {
     try {
       // Make sure to include `withCredentials: true` to allow session cookie
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://ecotransform-p3j5.onrender.com/api/auth/login",
         { email, password },
         { withCredentials: true }
       );
+      
 
       // Backend should return success: true or user info
       if (res.data.success) {

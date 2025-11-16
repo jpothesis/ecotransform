@@ -24,8 +24,8 @@ export default function ProfilePage() {
   const navigate = useNavigate()
 
   const [userProfile] = useState({
-    name: 'Sarah Anderson',
-    email: 'sarah@example.com',
+    name: 'Jaanvi Choudhary',
+    email: 'jaanvich1@gmail.com.com',
     avatar: '/placeholder-user.jpg',
     joinDate: 'March 2024',
     level: 'Gold Member',
