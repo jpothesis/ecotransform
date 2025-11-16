@@ -19,7 +19,7 @@ import BuyWaste from "./components/buy_waste";
 import NftCertificates from "./components/NftCertificates";
 import ProfilePage from "./components/ProfilePage";
 import GetStarted from "./components/GetStarted";
-import SignIn from "./components/SignIn";
+
 
 // ------------------------------
 // ProtectedRoute Component
@@ -55,7 +55,7 @@ function App() {
 
         {/* Authentication Routes */}
         <Route path="/get-started" element={<GetStarted />} />
-        <Route path="/login" element={<SignIn />} />
+        
 
         {/* Other Routes */}
         <Route path="/sell-waste" element={<SellWaste />} />
