@@ -6,11 +6,14 @@ const BuyWaste = () => {
   const [wasteProducts, setWasteProducts] = useState([]);
   const [selectedItems, setSelectedItems] = useState(new Set());
 
+const API_URL = import.meta.env.VITE_API_URL;
+// ✅ use deployed backend URL
+
   useEffect(() => {
     const fetchWaste = async () => {
       try {
-        const res = await axios.get(`${API_URL}/api/certificates`);
-        setWasteProducts(res.data.data || res.data); // depending on response structure
+        const res = await axios.get(`${API_URL}/api/waste`, { withCredentials: true });
+        setWasteProducts(res.data.data || res.data); // adapt depending on response
       } catch (err) {
         console.error("Error fetching waste:", err);
       }
@@ -47,13 +50,19 @@ const BuyWaste = () => {
           {wasteProducts.map(product => (
             <div key={product._id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-64 overflow-hidden group">
-                <img src={`${process.env.REACT_APP_API_URL}${product.images[0]}`} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                <img 
+                  src={`${API_URL}${product.images[0]}`} // full URL for deployed backend
+                  alt={product.title} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
                 <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-bold text-orange-600">
                   {product.material}
                 </div>
-                <div className="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                  {product.category}
-                </div>
+                {product.category && (
+                  <div className="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {product.category}
+                  </div>
+                )}
               </div>
 
               <div className="p-6">

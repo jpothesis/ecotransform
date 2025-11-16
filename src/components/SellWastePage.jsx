@@ -14,12 +14,14 @@ export default function SellWastePage() {
   const [userPrice, setUserPrice] = useState(""); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState(null);
-  const [certificates, setCertificates] = useState([]); // ✅ store NFT certificates
+  const [certificates, setCertificates] = useState([]); // NFT certificates from backend
 
-  // Handle file selection
+  // Get backend URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL;
+// make sure you have VITE_API_URL in .env
+
   const handleFileUpload = (e) => setSelectedFiles(Array.from(e.target.files));
 
-  // AI-based estimated value
   const { estimatedValue, ratePerKg } = useMemo(() => {
     const qty = parseFloat(quantity) || 0;
     let baseRate = 10;
@@ -37,7 +39,6 @@ export default function SellWastePage() {
 
   const aiRateText = material ? `(AI Rate: ₹${ratePerKg}/kg)` : "";
 
-  // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -52,19 +53,17 @@ export default function SellWastePage() {
       formData.append("price", userPrice || ratePerKg);
       formData.append("delivery", delivery);
       if (pickupDate) formData.append("pickupDate", pickupDate);
-      formData.append("createdBy", "user123"); // replace with actual user ID
+      formData.append("createdBy", "user123"); // replace with actual user ID from session
 
       selectedFiles.forEach(file => formData.append("images", file));
-      const API_URL = process.env.REACT_APP_API_URL;
 
-      // Send to backend
       const response = await axios.post(`${API_URL}/api/waste/create`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
-    });
+        withCredentials: true, // needed for session-based auth
+      });
 
       const { waste, certificate } = response.data;
 
-      // Update certificates state to show in frontend
       if (certificate) setCertificates(prev => [certificate, ...prev]);
 
       setSubmissionMessage({ type: "success", text: "Successfully listed your waste!" });
@@ -100,26 +99,22 @@ export default function SellWastePage() {
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-2xl border border-amber-200 space-y-8">
           {/* Title & Description */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b pb-2">What are you listing?</h2>
             <input type="text" placeholder="Title" value={title} onChange={e=>setTitle(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200" required/>
             <textarea placeholder="Description" value={description} onChange={e=>setDescription(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200" rows={4} required/>
           </div>
 
           {/* Material & Quantity */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b pb-2">Material & Quantity</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <select value={material} onChange={e=>setMaterial(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200" required>
-                <option value="" disabled>Select Material Type</option>
-                <option value="recycled_plastic">Plastic (#1-7)</option>
-                <option value="metal">Metal</option>
-                <option value="wood">Wood</option>
-                <option value="textile">Textile</option>
-                <option value="glass">Glass</option>
-                <option value="e-waste">E-Waste</option>
-              </select>
-              <input type="number" min={1} placeholder="Quantity (kg)" value={quantity} onChange={e=>setQuantity(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200" required/>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <select value={material} onChange={e=>setMaterial(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200" required>
+              <option value="" disabled>Select Material Type</option>
+              <option value="recycled_plastic">Plastic (#1-7)</option>
+              <option value="metal">Metal</option>
+              <option value="wood">Wood</option>
+              <option value="textile">Textile</option>
+              <option value="glass">Glass</option>
+              <option value="e-waste">E-Waste</option>
+            </select>
+            <input type="number" min={1} placeholder="Quantity (kg)" value={quantity} onChange={e=>setQuantity(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200" required/>
           </div>
 
           {/* Upload & Price */}
@@ -135,49 +130,28 @@ export default function SellWastePage() {
               <h3 className="text-xl font-bold text-amber-900 flex items-center gap-2">
                 <DollarSign className="h-5 w-5 text-orange-600"/> Set Your Price
               </h3>
-              <p className="text-sm text-amber-700">Enter desired price per kg. Leave blank to use AI's suggested rate.</p>
-              <div className="relative">
-                <span className="absolute left-0 top-0 mt-3 ml-4 text-lg font-bold text-amber-800">₹</span>
-                <input type="number" min={0} placeholder={`Price per kg ${aiRateText}`} value={userPrice} onChange={e=>setUserPrice(e.target.value)} className="w-full px-4 py-3 pl-10 rounded-xl border border-amber-300"/>
-                <span className="absolute right-0 top-0 mt-3 mr-4 text-sm font-semibold text-amber-700">/ kg</span>
-              </div>
+              <input type="number" min={0} placeholder={`Price per kg ${aiRateText}`} value={userPrice} onChange={e=>setUserPrice(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-300"/>
             </div>
           </div>
 
           {/* Delivery & Pickup */}
           <div className="space-y-4 pt-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b pb-2">Delivery & Pickup</h2>
             <select value={delivery} onChange={e=>setDelivery(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200" required>
               <option value="" disabled>Select Delivery Option</option>
               <option value="pickup">Schedule Pickup (We Collect)</option>
               <option value="self_drop">Self Drop</option>
             </select>
             {delivery === "pickup" && (
-              <>
-                <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 shadow-sm">
-                  <Calendar className="h-5 w-5 text-orange-600" />
-                  <input type="date" value={pickupDate} onChange={e=>setPickupDate(e.target.value)} className="bg-transparent focus:outline-none text-amber-800 font-medium w-full"/>
-                </div>
-                <div className="bg-amber-100 p-3 rounded-lg text-sm text-amber-700">
-                  Pickup requests require a precise location and may incur a small fee.
-                </div>
-              </>
+              <input type="date" value={pickupDate} onChange={e=>setPickupDate(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-amber-200"/>
             )}
           </div>
 
           {/* AI Calculated Value */}
           <div className="flex items-center justify-between bg-orange-100 p-5 rounded-xl shadow-lg border-l-4 border-orange-500 mt-8">
-            <div className="flex items-center gap-3">
-              <SparklesIcon className="h-7 w-7 text-orange-600 animate-pulse" />
-              <div className="font-extrabold text-amber-900 text-xl">AI Calculated Value</div>
-            </div>
-            <div className="text-right">
-              <span className="text-sm text-amber-700">{userPrice ? "Your rate applied:" : "AI Estimated Payout:"}</span>
-              <span className="font-extrabold text-2xl text-orange-700 block">{estimatedValue}</span>
-            </div>
+            <div className="font-extrabold text-amber-900 text-xl">AI Calculated Value</div>
+            <div className="text-2xl text-orange-700 font-extrabold">{estimatedValue}</div>
           </div>
 
-          {/* Submit Button */}
           <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-lg py-4 rounded-full shadow-lg" disabled={isSubmitting}>
             {isSubmitting ? "Submitting Listing..." : "List Waste Now"}
           </Button>
