@@ -8,7 +8,7 @@ const products = [
   {
     id: 1,
     name: "Upcycled Denim Tote Bag",
-    price: "₹899",
+    price: "₹8444",
     originalPrice: "₹1,299",
     rating: 4.8,
     reviews: 124,
@@ -34,7 +34,7 @@ const products = [
   {
     id: 3,
     name: "Newspaper Wall Art",
-    price: "₹1,299",
+    price: "₹170",
     originalPrice: "₹1,899",
     rating: 4.7,
     reviews: 67,
