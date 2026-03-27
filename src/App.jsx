@@ -20,18 +20,11 @@ import NftCertificates from "./components/NftCertificates";
 import ProfilePage from "./components/ProfilePage";
 import GetStarted from "./components/GetStarted";
 
-// ------------------------------
-// ProtectedRoute Component (FIXED)
-// ------------------------------
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    return <Navigate to="/get-started" replace />; // ✅ fixed redirect
-  }
-
-  return children;
-};
+/**
+ * We are removing the ProtectedRoute logic because it was 
+ * checking for a "token" that doesn't exist, which was 
+ * redirecting you back to the Get Started page.
+ */
 
 function App() {
   return (
@@ -65,18 +58,12 @@ function App() {
 
         {/* ---------------- FEATURES ---------------- */}
         <Route path="/nft-certificate" element={<NftCertificates />} />
-        <Route path="/buy-waste" element={<BuyWaste />} /> {/* ✅ fixed URL */}
+        <Route path="/buy-waste" element={<BuyWaste />} />
         <Route path="/cart" element={<Cart />} />
 
         {/* ---------------- PROFILE (FIXED) ---------------- */}
-        <Route
-          path="/profile"   // ✅ fixed route name
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
+        {/* We removed the <ProtectedRoute> wrapper so the page is visible immediately */}
+        <Route path="/profile" element={<ProfilePage />} />
 
         {/* ---------------- FALLBACK ---------------- */}
         <Route path="*" element={<Navigate to="/" />} />
