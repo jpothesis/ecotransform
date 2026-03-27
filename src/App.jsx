@@ -20,15 +20,16 @@ import NftCertificates from "./components/NftCertificates";
 import ProfilePage from "./components/ProfilePage";
 import GetStarted from "./components/GetStarted";
 
-
 // ------------------------------
-// ProtectedRoute Component
+// ProtectedRoute Component (FIXED)
 // ------------------------------
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token"); // check if user is logged in
+  const token = localStorage.getItem("token");
+
   if (!token) {
-    return <Navigate to="/login" />; // redirect to login if not logged in
+    return <Navigate to="/get-started" replace />; // ✅ fixed redirect
   }
+
   return children;
 };
 
@@ -39,7 +40,7 @@ function App() {
       <Navbar />
 
       <Routes>
-        {/* Home Route */}
+        {/* ---------------- HOME ---------------- */}
         <Route
           path="/"
           element={
@@ -53,30 +54,32 @@ function App() {
           }
         />
 
-        {/* Authentication Routes */}
+        {/* ---------------- AUTH ---------------- */}
         <Route path="/get-started" element={<GetStarted />} />
-        
 
-        {/* Other Routes */}
+        {/* ---------------- MAIN PAGES ---------------- */}
         <Route path="/sell-waste" element={<SellWaste />} />
         <Route path="/artisans" element={<Artisans />} />
         <Route path="/marketplace" element={<MarketPlaceSection />} />
         <Route path="/community" element={<CommunityPage />} />
 
-        {/* New routes */}
+        {/* ---------------- FEATURES ---------------- */}
         <Route path="/nft-certificate" element={<NftCertificates />} />
-        <Route path="/buy_waste" element={<BuyWaste />} />
+        <Route path="/buy-waste" element={<BuyWaste />} /> {/* ✅ fixed URL */}
         <Route path="/cart" element={<Cart />} />
 
-        {/* Protected Profile Route */}
+        {/* ---------------- PROFILE (FIXED) ---------------- */}
         <Route
-          path="/profile-page"
+          path="/profile"   // ✅ fixed route name
           element={
             <ProtectedRoute>
               <ProfilePage />
             </ProtectedRoute>
           }
         />
+
+        {/* ---------------- FALLBACK ---------------- */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );
